@@ -1,0 +1,119 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Disbursement Tracker</title>-->
+<!--    <script>-->
+<!--        function fetchReport() {-->
+<!--            fetch('/disbursement/report')-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    let reportDiv = document.getElementById('report');-->
+<!--                    reportDiv.innerHTML = '<h3>Disbursement Report</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';-->
+<!--                });-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Track Disbursement</h2>-->
+<!--<form method="post" action="/disbursement/track">-->
+<!--    <label>Application ID:</label>-->
+<!--    <input type="number" name="applicationId" required><br>-->
+<!--    <label>Amount:</label>-->
+<!--    <input type="number" step="0.01" name="amount" required><br>-->
+<!--    <label>Repayment Schedule:</label>-->
+<!--    <input type="text" name="repaymentSchedule" required><br>-->
+<!--    <button type="submit">Track</button>-->
+<!--</form>-->
+<!--<hr>-->
+<!--<button onclick="fetchReport()">View Disbursement Report</button>-->
+<!--<div id="report"></div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Disbursement Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f7f7f7;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            color: #34495e;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #2980b9;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #3498db;
+        }
+        #report {
+            margin-top: 24px;
+            background: #fff;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        hr {
+            margin: 32px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+    <script>
+        function fetchReport() {
+            fetch('/disbursement/report')
+                .then(response => response.json())
+                .then(data => {
+                    let reportDiv = document.getElementById('report');
+                    reportDiv.innerHTML = '<h3>Disbursement Report</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                });
+        }
+    </script>
+</head>
+<body>
+<h2>Track Disbursement</h2>
+<form method="post" action="/disbursement/track">
+    <label>Application ID:</label>
+    <input type="number" name="applicationId" required>
+    <label>Amount:</label>
+    <input type="number" step="0.01" name="amount" required>
+    <label>Repayment Schedule:</label>
+    <input type="text" name="repaymentSchedule" required>
+    <button type="submit">Track</button>
+</form>
+<hr>
+<button onclick="fetchReport()">View Disbursement Report</button>
+<div id="report"></div>
+</body>
+</html>

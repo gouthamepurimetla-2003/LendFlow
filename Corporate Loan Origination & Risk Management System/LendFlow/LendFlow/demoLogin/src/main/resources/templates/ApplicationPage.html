@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .nav-link.active {
+            @apply border-b-2 border-blue-600 text-blue-600 font-bold;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Navigation Bar -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+        <div class="text-xl font-bold text-gray-900 mb-4 sm:mb-0">
+            Loan Application Portal
+        </div>
+        <ul class="flex space-x-4 sm:space-x-8">
+            <li>
+                <a href="/home1" class="hover:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li><a href="#" class="nav-link py-2 px-4 text-gray-600 hover:text-blue-600 transition-colors duration-300 active" data-section="new-application">New Application</a></li>
+            <li><a href="#" class="nav-link py-2 px-4 text-gray-600 hover:text-blue-600 transition-colors duration-300" data-section="view-applications">View Applications</a></li>
+            <li><a href="#" class="nav-link py-2 px-4 text-gray-600 hover:text-blue-600 transition-colors duration-300" data-section="track-application">Track Application</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content Sections -->
+<main class="container mx-auto px-4 py-8 md:py-12">
+
+    <!-- New Application Section -->
+    <section id="new-application" class="p-8 bg-white rounded-xl shadow-md border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Start a New Application</h2>
+        <!-- Added ID to form for JavaScript handling -->
+        <form id="loanForm" class="space-y-6">
+            <div>
+                <label for="companyName" class="block text-sm font-medium text-gray-700"  >Company Name*</label>
+                <input type="text" id="companyName" name="companyName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+            <div>
+                <label for="loanAmount" class="block text-sm font-medium text-gray-700"  >Loan Amount (₹)*</label>
+                <input type="number" id="loanAmount" name="loanAmount" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+            <div>
+                <label for="loanType" class="block text-sm font-medium text-gray-700"  >Loan Type*</label>
+<!--                <input type="text" id="loanType" name="loanType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500">-->
+                <select id="loanType" name="loanType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">Select a loan type</option>
+                    <option value="COMMERCIAL_REAL_ESTATE">Commercial Real Estate</option>
+                    <option value="WORKING_CAPITAL">Working Capital</option>
+                    <option value="EQUIPMENT_FINANCING">Equipment Financing</option>
+                    <option value="LINE_OF_CREDIT">Line of Credit</option>
+                </select>
+            </div>
+<!--            <div>-->
+<!--                <label for="businessPlan" class="block text-sm font-medium text-gray-700">Business Plan (Upload File)</label>-->
+<!--                <input type="file" id="businessPlan" name="businessPlan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3">-->
+<!--            </div>-->
+            <div  class="flex justify-end">
+
+                <button href="/done" type="submit" class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                    Submit Application
+<!--                    Submit Application-->
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- View Applications Section (initially hidden) -->
+    <section id="view-applications" class="hidden p-8 bg-white rounded-xl shadow-md border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Submitted Application</h2>
+        <form class="max-w-md mx-auto space-y-4" id="searchForm">
+            <div>
+                <label for="CompanyName1" class="block text-sm font-medium text-gray-700">Company Name*</label>
+                <input type="text" id="CompanyName1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., Cognizant" required>
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                    View Application
+                </button>
+            </div>
+        </form>
+        <div id="results">
+        </div>
+    </section>
+
+    <!-- Track Application Section (initially hidden) -->
+    <section id="track-application" class="hidden p-8 bg-white rounded-xl shadow-md border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Track Your Application Status</h2>
+        <form class="max-w-md mx-auto space-y-4" id="trackForm">
+            <div>
+                <label for="applicationId" class="block text-sm font-medium text-gray-700">ApplicationId*</label>
+                <input type="text" id="applicationId" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500" placeholder="ApplicationId" required>
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                    Track Status
+                </button>
+            </div>
+        </form>
+        <div id="status-pending" class="hidden mt-8 p-6 bg-blue-50 rounded-lg text-center">
+            <p class="text-lg font-semibold text-blue-800">Status: <span class="text-xl font-bold text-blue-600"></span></p>
+            <p class="text-sm text-blue-700 mt-2">Your application is currently being reviewed by our team. Please check back later for updates.</p>
+        </div>
+        <div id="status-approved" class="hidden mt-8 p-6 bg-green-50 rounded-lg text-center">
+            <p class="text-lg font-semibold text-green-800">Status: <span class="text-xl font-bold text-green-600"></span></p>
+            <p class="text-sm text-green-700 mt-2">Congratulations! Your loan application has been approved.</p>
+        </div>
+        <div id="status-rejected" class="hidden mt-8 p-6 bg-red-50 rounded-lg text-center">
+            <p class="text-lg font-semibold text-red-800">Status: <span class="text-xl font-bold text-red-600"></span></p>
+            <p class="text-sm text-red-700 mt-2">We regret to inform you that your loan application has been rejected at this time.</p>
+        </div>
+        <div id="not-found-message" class="alert alert-danger hidden mt-4 text-center" role="alert">
+            <strong>Error:</strong> No application found for this ID.
+        </div>
+        <div id="TrackResults">
+        </div>
+    </section>
+
+</main>
+
+<!-- JavaScript to handle navigation, form submission, and section visibility -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+        const loanForm = document.getElementById('loanForm');
+
+        // Function to show a specific section
+        const showSection = (sectionId) => {
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        };
+
+        // Function to update the active nav link
+        const setActiveNavLink = (activeLink) => {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            activeLink.classList.add('active');
+        };
+
+        // Add click event listeners to nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const sectionId = event.target.dataset.section;
+                showSection(sectionId);
+                setActiveNavLink(event.target);
+            });
+        });
+
+        // Handle the loan form submission
+        loanForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(loanForm);
+
+            try {
+                // Send form data to the backend API endpoint
+                const response = await fetch('/submit1', {
+                    method: 'POST',
+                    body: formData
+                });
+                console.log(formData);
+
+                if (response.ok) {
+                   window.location.href = '/done';
+                } else {
+                    alert('Failed to submit application. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please check the console for more details.');
+            }
+        });
+
+        // Handle the track form submission
+                 document.getElementById('trackForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const applicationId = document.getElementById('applicationId').value.trim();
+            const resultsDiv = document.getElementById('TrackResults');
+            const statusPendingDiv = document.getElementById('status-pending');
+            const statusApprovedDiv = document.getElementById('status-approved');
+            const statusRejectedDiv = document.getElementById('status-rejected');
+            const notFoundMessageDiv = document.getElementById('not-found-message'); // Get the new div
+
+            // Hide all messages and clear previous results
+            resultsDiv.innerHTML = '';
+            statusPendingDiv.classList.add('hidden');
+            statusApprovedDiv.classList.add('hidden');
+            statusRejectedDiv.classList.add('hidden');
+            notFoundMessageDiv.classList.add('hidden'); // Hide the new div
+
+            if (applicationId === '') {
+                resultsDiv.innerHTML = '<p class="no-results" style="color: red;">Please enter an Application ID to search.</p>';
+                return;
+            }
+
+            resultsDiv.innerHTML = '<p class="no-results">Loading...</p>';
+
+            try {
+                const response = await fetch(`http://localhost:8084/search/id/${applicationId}`);
+                const application = await response.json();
+
+                if (Object.keys(application).length === 0) {
+                    resultsDiv.innerHTML = ''; // Clear loading message
+                    notFoundMessageDiv.classList.remove('hidden'); // Show the "not found" message
+                    return;
+                }
+
+                // Build the HTML table to display the application
+                let htmlContent = `
+                    <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Application Found:</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Company</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${application.applicationId}</td>
+                                    <td>${application.companyName}</td>
+                                    <td>${application.trackStatus}</td>
+                                    <td>${new Date(application.date).toLocaleDateString() + ' ' + new Date(application.date).toLocaleTimeString()}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>`;
+
+                resultsDiv.innerHTML = htmlContent;
+
+                // Check the status and show the appropriate message
+                if (application.trackStatus === 'PENDING' || application.trackStatus === 'In Review') {
+                    const statusText = statusPendingDiv.querySelector('span');
+                    statusText.textContent = application.trackStatus;
+                    statusPendingDiv.classList.remove('hidden');
+                } else if (application.trackStatus === 'APPROVED') {
+                    const statusText = statusApprovedDiv.querySelector('span');
+                    statusText.textContent = application.trackStatus;
+                    statusApprovedDiv.classList.remove('hidden');
+                } else if (application.trackStatus === 'REJECTED') {
+                    const statusText = statusRejectedDiv.querySelector('span');
+                    statusText.textContent = application.trackStatus;
+                    statusRejectedDiv.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                resultsDiv.innerHTML = ''; // Clear loading message
+                notFoundMessageDiv.classList.remove('hidden'); // Show the "not found" message
+                console.error('Fetch error:', error);
+            }
+        });
+      // Handle the "View Applications" form submission
+
+        document.getElementById('searchForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent form from submitting and reloading the page
+
+            const companyName = document.getElementById('CompanyName1').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch(`http://localhost:8084/search/${companyName}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const applications = await response.json();
+
+                if (applications.length === 0) {
+                    resultsDiv.innerHTML = '<p>No applications found.</p>';
+                    return;
+                }
+
+                // Build the HTML to display the applications
+                let htmlContent = `
+                    <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Application Found:</h2>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Company</th>
+                                <th>Loan Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                applications.forEach(app => {
+                    // Format the date for display
+                    const date = new Date(app.date);
+                    const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+
+                    htmlContent += `
+                        <tr>
+                            <td>${app.applicationId}</td>
+                            <td>${app.companyName}</td>
+                            <td>${app.loanType}</td>
+                            <td>${app.loanAmount}</td>
+                            <td>${app.trackStatus}</td>
+                            <td>${formattedDate}</td>
+                        </tr>
+                    `;
+                });
+                htmlContent += '</tbody></table></div>';
+                resultsDiv.innerHTML = htmlContent;
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+                console.error('Fetch error:', error);
+            }
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>
