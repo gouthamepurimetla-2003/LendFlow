@@ -211,14 +211,4 @@ This project provides an opportunity to explore:
 - Credit and risk evaluation concepts
 - Modular application development
 
-## Author
 
-**Ajay Reddy**  
-Computer Science & Engineering Graduate  
-AI/ML & Full Stack Development Enthusiast
-
-## License
-
-This project is developed for educational and portfolio purposes.
-
-Add a license file to the repository if you intend to distribute the project under a specific open-source license.
